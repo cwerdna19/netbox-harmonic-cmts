@@ -18,12 +18,12 @@ class HarmonicCmts(NetBoxModel):
     physical_cmts1 = models.ForeignKey(
         to='dcim.Device',
         on_delete=models.PROTECT,
-        related_name='cmts'
+        related_name='cmts1'
     )
     physical_cmts2 = models.ForeignKey(
         to='dcim.Device',
         on_delete=models.PROTECT,
-        related_name='cmts'
+        related_name='cmts2'
     )
     comments = models.TextField(
         blank=True
