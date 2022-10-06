@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.urls import reverse
 from netbox.models import NetBoxModel
 from utilities.choices import ChoiceSet
 
@@ -32,14 +33,18 @@ class HarmonicCmts(NetBoxModel):
         ordering = ('name',)
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('plugins:netbox_harmonic_cmts:harmoniccmts', args=[self.pk])
 
 class MacDomain(NetBoxModel):
     mac_domain = models.CharField(
         max_length=10,
         choices=MacDomainChoices
     )
-    node = models.CharField(
-        max_length=20
+    node = models.ForeignKey(
+        to='dcim.Device',
+        on_delete=models.PROTECT,
+        related_name='node'
     )
     cmts = models.ForeignKey(
         to=HarmonicCmts,
@@ -50,3 +55,5 @@ class MacDomain(NetBoxModel):
         ordering = ('mac_domain', 'node', 'cmts')
     def __str__(self):
         return f'{self.cmts} {self.mac_domain} {self.node}'
+    def get_absolute_url(self):
+        return reverse('plugins:netbox_harmonic_cmts:macdomain', args=[self.pk])
