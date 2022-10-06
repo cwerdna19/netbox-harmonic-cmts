@@ -13,7 +13,7 @@ class HarmonicCmtsTable(NetBoxTable):
 
 class MacDomainTable(NetBoxTable):
     mac_domain = ChoiceFieldColumn()
-    class Meta(MacDomainTable.Meta):
+    class Meta(NetBoxTable.Meta):
         model = MacDomain
         fields = ('pk', 'mac_domain', 'node', 'cmts', 'actions',)
         default_columns = ('mac_domain', 'node', 'cmts', 'actions',)
