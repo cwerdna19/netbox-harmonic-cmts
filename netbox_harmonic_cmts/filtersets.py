@@ -1,5 +1,5 @@
 from netbox.filtersets import NetBoxModelFilterSet
-from .models import AccessListRule, MacDomain
+from .models import HarmonicCmts, MacDomain
 
 class MacDomainFilterSet(NetBoxModelFilterSet):
 
