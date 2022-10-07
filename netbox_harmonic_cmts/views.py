@@ -1,8 +1,16 @@
 from netbox.views import generic
-from . import forms, models, tables
+from . import filtersets, forms, models, tables
 
 class HarmonicCmtsView(generic.ObjectView):
     queryset = models.HarmonicCmts.objects.all()
+
+    def get_extra_content(self, request, instance):
+        table = tables.MacDomainTable(instance.macdomains.all())
+        table.configure(request)
+
+        return {
+            'macdomain_table': table,
+        }
 
 class HarmonicCmtsListView(generic.ObjectListView):
     queryset = models.HarmonicCmts.objects.all()
@@ -21,6 +29,8 @@ class MacDomainView(generic.ObjectView):
 class MacDomainListView(generic.ObjectListView):
     queryset = models.MacDomain.objects.all()
     table = tables.MacDomainTable
+    filterset = filtersets.MacDomainFilterSet
+    filterset_form = forms.MacDomainFilterForm
 
 class MacDomainEditView(generic.ObjectEditView):
     queryset = models.MacDomain.objects.all()

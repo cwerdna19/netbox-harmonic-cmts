@@ -1,5 +1,6 @@
+from django import forms
 from dcim.models import Device
-from netbox.forms import NetBoxModelForm
+from netbox.forms import NetBoxModelForm, NetBoxModelFilterSetForm
 from utilities.forms.fields import CommentField, DynamicModelChoiceField
 from .models import HarmonicCmts, MacDomain
 
@@ -25,3 +26,14 @@ class MacDomainForm(NetBoxModelForm):
     class Meta:
         model = MacDomain
         fields = ('mac_domain', 'node', 'cmts', 'tags')
+
+class MacDomainFilterForm(NetBoxModelFilterSetForm):
+    model = MacDomain
+    cmts = forms.ModelMultipleChoiceField(
+        queryset=HarmonicCmts.objects.all(),
+        required=False
+    )
+    mac_domain = forms.ModelMultipleChoiceField(
+        queryset=MacDomain.objects.all(),
+        required=False
+    )
